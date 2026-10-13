@@ -1,0 +1,180 @@
+@import "tailwindcss";
+
+:root {
+  --bg: #0b0c10;
+  --surface: #14161c;
+  --shadow-dark: #07080b;
+  --shadow-light: #1e212a;
+  --accent: #7c5cff;
+  --accent-2: #38e1ff;
+  --text: #e6e8ef;
+  --muted: #8a8fa3;
+}
+
+html,
+body {
+  height: 100%;
+  /* Abismo espacial: azul marino muy profundo tirando a negro */
+  background: radial-gradient(1400px 900px at 50% 30%, #07162e 0%, #030a18 55%, #01030a 100%);
+  background-attachment: fixed;
+  color: var(--text);
+  font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  overflow-x: hidden;
+}
+
+/* Textarea neumórfico oscuro (hundido) */
+.neu-inset {
+  background: var(--surface);
+  border-radius: 28px;
+  box-shadow:
+    inset 8px 8px 18px var(--shadow-dark),
+    inset -8px -8px 18px var(--shadow-light);
+  transition: box-shadow 0.3s ease;
+}
+
+.neu-inset:focus-within {
+  box-shadow:
+    inset 8px 8px 18px var(--shadow-dark),
+    inset -8px -8px 18px var(--shadow-light),
+    0 0 0 1px rgba(124, 92, 255, 0.45),
+    0 0 40px rgba(124, 92, 255, 0.15);
+}
+
+/* Zona de arrastrar y soltar: hueco neumórfico con borde punteado */
+.dropzone {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 12px 16px;
+  padding: 16px 20px;
+  border: 1px dashed rgba(138, 143, 163, 0.35);
+  border-radius: 22px;
+  background: var(--surface);
+  color: var(--muted);
+  box-shadow:
+    inset 5px 5px 12px var(--shadow-dark),
+    inset -5px -5px 12px var(--shadow-light);
+  transition: border-color 0.2s ease, color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.dropzone[data-dragging="true"] {
+  border-color: var(--accent-2);
+  color: var(--accent-2);
+  box-shadow:
+    inset 5px 5px 12px var(--shadow-dark),
+    inset -5px -5px 12px var(--shadow-light),
+    0 0 30px rgba(56, 225, 255, 0.18);
+}
+
+.dropzone[data-loading="true"] {
+  opacity: 0.7;
+}
+
+.neu-btn:disabled {
+  cursor: progress;
+}
+
+/* Tarjeta neumórfica (elevada) para el resultado */
+.neu-raised {
+  background: var(--surface);
+  border-radius: 28px;
+  box-shadow:
+    10px 10px 24px var(--shadow-dark),
+    -10px -10px 24px var(--shadow-light);
+}
+
+/* Botón neumórfico pequeño (elevado; se hunde al pulsar) */
+.neu-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+  min-height: 40px;
+  padding: 8px 16px;
+  border: 0;
+  border-radius: 14px;
+  background: var(--surface);
+  color: var(--text);
+  font-size: 0.875rem;
+  font-weight: 600;
+  white-space: nowrap;
+  cursor: pointer;
+  box-shadow:
+    5px 5px 12px var(--shadow-dark),
+    -5px -5px 12px var(--shadow-light);
+  transition: box-shadow 0.15s ease, color 0.2s ease;
+}
+
+.neu-btn:hover {
+  color: var(--accent-2);
+}
+
+.neu-btn:active {
+  box-shadow:
+    inset 4px 4px 9px var(--shadow-dark),
+    inset -4px -4px 9px var(--shadow-light);
+}
+
+.neu-btn[data-status="copied"] {
+  color: #4ade80;
+  box-shadow:
+    inset 4px 4px 9px var(--shadow-dark),
+    inset -4px -4px 9px var(--shadow-light);
+}
+
+.neu-btn[data-status="error"] {
+  color: #f87171;
+}
+
+@media (max-width: 480px) {
+  .neu-btn {
+    padding: 8px 12px;
+    font-size: 0.8rem;
+  }
+}
+
+/* Botón 3D: cara + "grosor" inferior que se aplasta al pulsar */
+.btn3d {
+  position: relative;
+  border: 0;
+  padding: 0;
+  background: transparent;
+  cursor: pointer;
+  perspective: 800px;
+  outline-offset: 6px;
+}
+
+.btn3d .face {
+  display: block;
+  padding: 18px 44px;
+  border-radius: 18px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: white;
+  background: linear-gradient(135deg, var(--accent), #5b8cff 60%, var(--accent-2));
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.35) inset,
+    0 8px 0 #3a2a99,
+    0 18px 30px rgba(124, 92, 255, 0.35);
+  transition: transform 0.12s ease, box-shadow 0.12s ease, filter 0.2s ease;
+  transform-style: preserve-3d;
+}
+
+.btn3d:hover .face {
+  filter: brightness(1.12);
+}
+
+.btn3d:active .face,
+.btn3d[data-loading="true"] .face {
+  transform: translateY(6px);
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.35) inset,
+    0 2px 0 #3a2a99,
+    0 6px 14px rgba(124, 92, 255, 0.3);
+}
+
+.btn3d:disabled {
+  cursor: not-allowed;
+  opacity: 0.55;
+}
